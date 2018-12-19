@@ -1,0 +1,25 @@
+{
+  "burgers":[
+  {
+    "Name": "Custom-Burger",
+    "Meat": 0,
+    "Cheese": 0,
+    "Bacon": 0,
+    "Salad": 0
+  },
+  {
+    "Name": "Normal-Burger",
+    "Meat": 1,
+    "Cheese": 1,
+    "Bacon": 0,
+    "Salad": 1
+  },
+  {
+    "Name": "Dobble-Burger",
+    "Meat": 2,
+    "Cheese": 1,
+    "Bacon": 1,
+    "Salad": 1
+  }
+]
+}

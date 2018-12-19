@@ -6,7 +6,8 @@ const control = props => {
     <div className={styles.Control}>
       <button
         className={styles.Less}
-        onClick={() => props.update(props.ingredientName, "less")}
+        disabled={props.stats["less"]}
+        onClick={() => props.popIngredient(props.ingredientName)}
       >
         -
       </button>
@@ -16,7 +17,8 @@ const control = props => {
       </p>
       <button
         className={styles.More}
-        onClick={() => props.update(props.ingredientName, "more")}
+        disabled={props.stats["more"]}
+        onClick={() => props.pushIngredient(props.ingredientName)}
       >
         +
       </button>

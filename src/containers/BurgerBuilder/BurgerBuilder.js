@@ -4,40 +4,65 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 
 class BurgerBuilder extends Component {
-  state = {
-    ingredients: {
-      salad: 0,
-      bacon: 0,
-      cheese: 0,
-      meat: 0
-    }
+  idGenerator = () => {
+    return (
+      "_" +
+      Math.random()
+        .toString(36)
+        .substr(2, 9)
+    );
   };
 
-  updateIngredient = objIng => {
+  state = {
+    ingredients: {
+      meat: { amount: 0, price: 2, block: { more: false, less: true } },
+      cheese: { amount: 0, price: 1, block: { more: false, less: true } },
+      bacon: { amount: 0, price: 1.5, block: { more: false, less: true } },
+      salad: { amount: 0, price: 0.5, block: { more: false, less: true } }
+    },
+    actualIngredients: [],
+    priceToPay: 0,
+    purchasable: false
+  };
+
+  update = (objIng, arrIng, price) => {
     this.setState({
-      ingredients: objIng
+      ingredients: objIng,
+      actualIngredients: arrIng,
+      priceToPay: price
     });
   };
 
-  ingredientHandler = (igKey, operator) => {
-    let objIng = {
-      ...this.state.ingredients
-    };
-    if ((operator === "less") & (this.state.ingredients[igKey] > 0)) {
-      objIng[igKey] = --objIng[igKey];
-    } else if ((operator === "more") & (this.state.ingredients[igKey] < 4)) {
-      objIng[igKey] = ++objIng[igKey];
+  updatePurchase = aBoolean => {
+    this.setState({
+      purchasable: aBoolean
+    });
+  };
+
+  isPurchasable = () => {
+    let purchase = false;
+    if (this.state.ingredients["meat"].amount > 0) {
+      purchase = true;
     }
-    this.updateIngredient(objIng);
+    this.updatePurchase(purchase);
   };
 
   render() {
     return (
       <Aux>
-        <Burger ingredients={this.state.ingredients} />
+        <Burger
+          actualIngredients={this.state.actualIngredients}
+          ingredients={this.state.ingredients}
+          keyGen={this.idGenerator}
+        />
         <BuildControls
           ingredients={this.state.ingredients}
-          update={this.ingredientHandler}
+          actualIngredients={this.state.actualIngredients}
+          priceToPay={this.state.priceToPay}
+          update={this.update}
+          isPurchasable={this.isPurchasable}
+          purchasable={this.state.purchasable}
+          keyGen={this.idGenerator}
         />
       </Aux>
     );

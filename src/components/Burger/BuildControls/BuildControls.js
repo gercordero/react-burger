@@ -82,7 +82,11 @@ const buildControls = props => {
       </div>
       <div className={styles.BuildControls}>{control}</div>
       <div className={styles.OrderNow}>
-        <button disabled={!props.purchasable} className={styles.OrderButton}>
+        <button
+          disabled={!props.purchasable}
+          className={styles.OrderButton}
+          onClick={() => props.showOrder(true)}
+        >
           ORDER NOW
         </button>
       </div>

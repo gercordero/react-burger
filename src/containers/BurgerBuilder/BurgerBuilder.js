@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import Aux from "../../components/Aux/Aux";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
+import Modal from "../../components/UI/Modal/Modal";
+import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 
 class BurgerBuilder extends Component {
-  idGenerator = () => {
+  keyGen = () => {
     return (
       "_" +
       Math.random()
@@ -22,7 +24,8 @@ class BurgerBuilder extends Component {
     },
     actualIngredients: [],
     priceToPay: 0,
-    purchasable: false
+    purchasable: false,
+    showOrder: false
   };
 
   update = (objIng, arrIng, price) => {
@@ -47,13 +50,27 @@ class BurgerBuilder extends Component {
     this.updatePurchase(purchase);
   };
 
+  showOrder = aBoolean => {
+    this.setState({
+      showOrder: aBoolean
+    });
+  };
+
   render() {
     return (
       <Aux>
+        <Modal show={this.state.showOrder} closeModal={this.showOrder}>
+          <OrderSummary
+            ingredients={this.state.ingredients}
+            closeModal={this.showOrder}
+            priceToPay={this.state.priceToPay}
+            keyGen={this.keyGen}
+          />
+        </Modal>
         <Burger
           actualIngredients={this.state.actualIngredients}
           ingredients={this.state.ingredients}
-          keyGen={this.idGenerator}
+          keyGen={this.keyGen}
         />
         <BuildControls
           ingredients={this.state.ingredients}
@@ -62,7 +79,8 @@ class BurgerBuilder extends Component {
           update={this.update}
           isPurchasable={this.isPurchasable}
           purchasable={this.state.purchasable}
-          keyGen={this.idGenerator}
+          showOrder={this.showOrder}
+          keyGen={this.keyGen}
         />
       </Aux>
     );

@@ -10,7 +10,7 @@ const modal = props => {
   };
   return (
     <Aux>
-      <Backdrop show={props.show} closeModal={props.closeModal} />
+      <Backdrop show={props.show} closed={props.closeModal} />
       <div style={show} className={styles.Modal}>
         {props.children}
       </div>
